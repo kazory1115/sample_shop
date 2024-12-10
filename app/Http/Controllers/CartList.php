@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
 
-
-class ProductsList extends Controller
+class CartList extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        //
         try {
-            $products = Products::all();
-            return view('layouts.list', [               
-                'products' => $products,
+            // $products = Products::all();
+            return view('layouts.cart', [               
+                'products' => '',
             ]);
         
         } catch (\Exception $e) {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name')->comment('產品名稱');
             $table->text('description')->comment('產品介紹');
             $table->unsignedBigInteger('category_id')->nullable()->comment('類別編號');
+            $table->Integer('show')->default(1)->comment('是否顯示(預設顯示1  不顯示 0)');
             $table->text('image_url')->comment('圖片網址');
             $table->decimal('price', 10, 2)->comment('價錢'); // 支持兩位小數
             $table->timestamps(); //created_at 和 updated_at

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 use App\Http\Controllers\ProductsList;
+use App\Http\Controllers\OrderList;
+use App\Http\Controllers\CartList;
+
+use App\Http\Controllers\Test;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\Products;
 
@@ -31,23 +36,31 @@ Route::get('/', function () {
 
 Route::get('/list', [ProductsList::class, 'index'])->name('list');
 
-Route::get('/list11', function () {
+Route::get('/order',[OrderList::class, 'index'])->name('order');
+
+
+Route::get('/cart',[CartList::class, 'index'])->name('cart');
+
+Route::get('/test', function () {
     return view('test');
 });
 
+ 
 
-Route::get('/time', function () {
-    return response()->json([
-        'timeWithoutFormat' => Carbon::now(),
-        'current_time' => Carbon::now()->format('Y-m-d H:i:s'),
-        'now' => date('Y-m-d H:i:s'),
-        'timestamp' => strtotime('now'),
-        'timestampToFormat' => date('Y-m-d H:i:s',strtotime('now'))
-    ]);
+Route::get('/all', function (Request $request) {
+    return response()->json($request->session()->all());
 });
 
 
-Route::get('/test', function () {
+Route::get('/set', [Test::class, 'setSession']) -> name('1');
+
+Route::get('/del', [Test::class, 'delSession']) -> name('1');
+
+Route::get('/get-session', [Test::class, 'getSession']) -> name('2');
+
+
+
+Route::get('/testdata', function () {
     try {
         // $name = $request->input('name');
         // $phone = $request->input('phone');
@@ -63,59 +76,30 @@ Route::get('/test', function () {
         $data = [
            
             [
-                'name' => '草莓奶油蛋糕',
-                'description' => '新鮮草莓與柔滑奶油結合，蛋糕綿密柔軟，口感清新自然，為草莓愛好者量身打造。',
-                'image_url' => 'https://example.com/cake2.jpg',
-                'price' => 120,
+                'name' => '椰香綠咖哩海鮮總匯',
+                'description' => '小辣 | 含蝦子，淡菜，魷魚及蛤蜊主食擇一  | 小辣 | 含蝦子，淡菜，魷魚及蛤蜊',
+                'image_url' => 'https://images.deliveryhero.io/image/fd-tw/Products/66210649.jpg',
+                'price' => 240,
             ],
             [
-                'name' => '芒果慕斯蛋糕',
-                'description' => '以熱帶芒果製作的慕斯蛋糕，口感清爽酸甜，適合夏日享用。',
-                'image_url' => 'https://example.com/cake3.jpg',
-                'price' => 130,
+                'name' => '松露嫩雞燉飯',
+                'description' => '肉品原產地：台灣豬肉、丹麥豬肉、加拿大豬肉、澳洲牛肉、台灣雞肉',
+                'image_url' => 'https://images.deliveryhero.io/image/fd-tw/Products/66210642.jpg',
+                'price' => 210,
             ],
             [
-                'name' => '抹茶紅豆蛋糕',
-                'description' => '抹茶與紅豆的絕妙搭配，細膩的蛋糕體帶有淡淡茶香，層層綿密。',
-                'image_url' => 'https://example.com/cake4.jpg',
-                'price' => 140,
+                'name' => '田園南瓜鮮蔬烤餅',
+                'description' => '可做蛋奶素',
+                'image_url' => 'https://images.deliveryhero.io/image/fd-tw/Products/66210641.jpg',
+                'price' => 190,
             ],
             [
-                'name' => '藍莓芝士蛋糕',
-                'description' => '濃郁芝士搭配新鮮藍莓醬，入口即化，甜而不膩，適合芝士控。',
-                'image_url' => 'https://example.com/cake5.jpg',
-                'price' => 150,
+                'name' => '德式香腸烤餅',
+                'description' => '可做蛋奶素',
+                'image_url' => 'https://images.deliveryhero.io/image/fd-tw/Products/66210652.jpg',
+                'price' => 190,
             ],
-            [
-                'name' => '檸檬蛋糕卷',
-                'description' => '酸甜檸檬內餡包裹在綿密蛋糕中，清新的滋味讓人耳目一新。',
-                'image_url' => 'https://example.com/cake6.jpg',
-                'price' => 90,
-            ],
-            [
-                'name' => '黑森林蛋糕',
-                'description' => '德國經典甜品，結合巧克力蛋糕、鮮奶油和櫻桃餡，層次豐富。',
-                'image_url' => 'https://example.com/cake7.jpg',
-                'price' => 160,
-            ],
-            [
-                'name' => '提拉米蘇蛋糕',
-                'description' => '經典義大利甜點，口感柔滑細膩，咖啡香氣濃郁，帶來滿滿幸福感。',
-                'image_url' => 'https://example.com/cake8.jpg',
-                'price' => 170,
-            ],
-            [
-                'name' => '南瓜派蛋糕',
-                'description' => '以香甜南瓜餡製作，搭配酥脆的餅皮，濃郁溫暖的口感讓人回味無窮。',
-                'image_url' => 'https://example.com/cake9.jpg',
-                'price' => 110,
-            ],
-            [
-                'name' => '榛果巧克力塔',
-                'description' => '榛果與巧克力的完美結合，搭配酥脆塔皮，滿足你的甜點渴望。',
-                'image_url' => 'https://example.com/cake10.jpg',
-                'price' => 180,
-            ],
+          
         ];
         
     
@@ -137,3 +121,12 @@ Route::get('/test', function () {
 });
 
 
+Route::get('/time', function () {
+    return response()->json([
+        'timeWithoutFormat' => Carbon::now(),
+        'current_time' => Carbon::now()->format('Y-m-d H:i:s'),
+        'now' => date('Y-m-d H:i:s'),
+        'timestamp' => strtotime('now'),
+        'timestampToFormat' => date('Y-m-d H:i:s',strtotime('now'))
+    ]);
+});

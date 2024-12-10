@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
 
-
-class ProductsList extends Controller
+class OrderList extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +12,9 @@ class ProductsList extends Controller
     public function index()
     {
         try {
-            $products = Products::all();
-            return view('layouts.list', [               
-                'products' => $products,
+            // $products = Products::all();
+            return view('layouts.order', [               
+                'products' => '',
             ]);
         
         } catch (\Exception $e) {
