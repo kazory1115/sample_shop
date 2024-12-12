@@ -40,6 +40,7 @@ Route::get('/order',[OrderList::class, 'index'])->name('order');
 
 
 Route::get('/cart',[CartList::class, 'index'])->name('cart');
+Route::get('/cartdel',[CartList::class, 'del'])->name('CartDel');
 
 Route::get('/test', function () {
     return view('test');

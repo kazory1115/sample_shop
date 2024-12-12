@@ -27,45 +27,66 @@ class Addcart extends Component
         //判斷段無值 預設給0 
         $this->count = $CartCount[$product['id']] ?? 0;
      
-         $this->test = 'test';
+
     }
 
-    public function add()
+    private function updateCart($type)
     {
-        $this->count++;
 
-        //直接更新的
-        // Session::put('product_count_' . $this->product['id'], $this->count);
-
-        // 讀出 product_count
+        // 讀出
         $productCounts = Session::get('cart_count', []);
-
-        // 更新
-        $productCounts[ $this->product['id']] = $this->count;
-
-        // 存回 Session
+        
+        $productCounts[$this->product['id']] =  $this->count;
+        
+        // 存回
         Session::put('cart_count', $productCounts);
 
-       
-       
+        //紀錄購物車數量的
+        if($type == 'add'){
+            $cartArray = Session::get('cartArray', []);
+            $cartArray[] = $this->product['id'];
+            Session::put('cartArray', $cartArray);
+        }else{
+            $cartArray = Session::get('cartArray', []);
+
+            // 找到第一個 $this->product['id'] 的key
+            $key = array_search($this->product['id'], $cartArray);
+
+            if ($key !== false) {
+                // 找到移除
+                unset($cartArray[$key]);
+            }
+
+            //array_values重置array的索引(重排列的概念)存回 Session
+            Session::put('cartArray', array_values($cartArray));
+           
+
+        }
+      
+
+
+        $this->dispatch('cartUpdated');
     }
 
 
+    //加入
+    public function add()
+    {
+        $this->count++;    
+        $this->updateCart('add');       
+    }
+
+    //刪除
     public function reduce()
     {
         if($this->count > 0){
             $this->count --;
         }else{
             $this->count = 0;
+           
         }
         
-        $productCounts = Session::get('cart_count', []);
-
-        $productCounts[ $this->product['id']] = $this->count;
-
-        Session::put('cart_count', $productCounts);
-
-        
+        $this->updateCart('reduce');        
     }
 
     

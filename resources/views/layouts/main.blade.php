@@ -31,9 +31,18 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <!-- 正常標題 -->
-                            <li class="nav-item"><a class="nav-link" href="{{ route('list') }}"> <i class="fa-solid fa-house"></i> 首頁</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('cart') }}"><i class="fa-solid fa-cart-shopping"></i> 購物車</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('order') }}"> <i class="fa-solid fa-receipt"></i>  訂單</a></li>
+                            {{-- <li class="nav-item"><a class="nav-link" href="{{ route('list') }}"> <i class="fa-solid fa-house"></i> 首頁</a></li> --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cart') }}">
+                                    <i class="fa-solid fa-cart-shopping"></i> 購物車
+                                    <livewire:cart-count />
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('order') }}"> 
+                                    <i class="fa-solid fa-receipt"></i>  訂單
+                                </a>
+                            </li>
                             <!-- 下拉 -->
                             {{--
                             <li class="nav-item dropdown">

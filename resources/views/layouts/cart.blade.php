@@ -30,27 +30,72 @@
 
 @section('content')
 <section class="py-2">
-    <div class="container px-3 my-5 " style="background: yellow">
-        <div class="row gx-5 justify-content-center" style="background: yellow">
-            <div class="col-lg-8 col-xl-6">
-                <div class="text-center">
-                    <h2 class="fw-bolder">產品列表</h2>
-                    <p class="lead fw-normal text-muted mb-5">我們精選的美味餐點。</p>
+    <div class="container px-3 my-5" style="border: 1px solid #ccc; border-radius: 10px; padding: 20px">
+        <div class="justify-content-center"  style="margin: 24px">
+            
+            @if ($status == 1)
+                @foreach($cartlist as $product)        
+                    <div style="display: grid; grid-template-columns:1.5fr 1.5fr 1fr; margin: 20px  0px  20px 0px;">         
+                        <div  style="width: 90%;" >
+                            <img style="width: 90%;border: 1px solid #ccc; border-radius: 10px;" src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}" />  
+                        </div>                                       
+                        <div  style="width: 90%; padding-top:5%">
+                            <h3 >
+                                {{$product['name']}}
+                            </h3>
+                            <h5 >
+                                {{$product['description']}}
+                            </h5>
+                            
+                            {{-- style="font-size:clamp(15px, 2vw, 20px); " --}}
+                        </div>
+                        
+                        <div style="display: grid; grid-template-rows:1fr  1fr;">
+                            
+                            <div style="font-size:24px; display: flex; justify-content: flex-end;">
+                                <a class="nav-link" href="{{ route('CartDel', ['product' => $product->id]) }}">
+                                <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                                
+                            </div>
+                            <div style="display: flex; justify-content: flex-end;align-items: flex-end;">
+                                <h5> $ {{$product['price']}} </h5>    
+                            </div>            
+                        </div>
+
+
+
+                    </div>
+                    
+
+                    <hr>
+                @endforeach
+                <br>
+
+                <div style="display: flex;align-content: flex-end;justify-content: flex-end;align-items: flex-end;">
+                    <h3>
+                        訂單總額：${{$total}}
+                    </h3>
+                    
                 </div>
-            </div>
-        </div>
-        <div class="row gx-5"  style="background: rgb(23, 141, 111)">
-            <div class="col-lg-4 mb-5">
-                <div class="card h-100 shadow border-0">
-                    {{-- <img style="" class="card-img-top" src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}" /> --}}
+                <div style="display: flex;align-content: flex-end;justify-content: flex-end;align-items: flex-end;">
                    
+                    <button type="button" class="btn btn-outline-success" style="margin-top: 24px ;">確定結帳</button>
                 </div>
-            </div>
 
+            @else
+                <div style="color:#888">
+                    <h3>目前購物車無餐點</h3>
+                    <h5><a class="" href="{{ route('list') }}">前往選購</a></h5>
+                </div>
+                
+            @endif
 
+           
 
-
+          
         </div>
+      
     </div>
 </section>
 @endsection
