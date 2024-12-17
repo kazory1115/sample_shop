@@ -40,10 +40,10 @@
                             <img style="width: 90%;border: 1px solid #ccc; border-radius: 10px;" src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}" />  
                         </div>                                       
                         <div  style="width: 90%; padding-top:5%">
-                            <div style="font-size:clamp(16px, 2vw, 38px); ">
+                            <div style="font-size:clamp(16px, 2vw, 32px); ">
                                 {{$product['name']}}
                             </div>
-                            <div style="font-size:clamp(9px, 1.5vw, 24px); ">
+                            <div style="font-size:clamp(9px, 1.5vw, 22px); ">
                                 {{$product['description']}}
                             </div>
                             
@@ -52,20 +52,19 @@
                         
                         <div style="display: grid; grid-template-rows:1fr  1fr;">
                             
-                            <div style="font-size:clamp(20px, 2vw, 24px); display: flex; justify-content: flex-end;">
-                                <a class="nav-link" href="{{ route('CartDel', ['product' => $product->id]) }}">
+                            <div style="font-size:clamp(16px, 2vw, 32px); display: flex; justify-content: flex-end;">
+                                <a class="nav-link" href="{{ route('cartdel', ['product' => $product->id]) }}">
                                 <i class="fa-solid fa-trash-can"></i>
                                 </a>
                                 
                             </div>
                             <div style="display: flex; justify-content: flex-end;align-items: flex-end;">
-                                <h5> ${{$product['price']}} </h5>    
+                                <span style="font-size:clamp(16px, 2vw, 32px);""> ${{$product['price']}} </span>    
                             </div>            
                         </div>
-
-
-
                     </div>
+                    
+                                    
                     
 
                     <hr>

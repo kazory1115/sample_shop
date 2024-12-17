@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\ProductsList;
 use App\Http\Controllers\OrderList;
 use App\Http\Controllers\CartList;
+use App\Http\Controllers\UsersController;
 
 use App\Http\Controllers\Test;
 
@@ -27,47 +28,67 @@ use App\Models\Products;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('list');
 });
 
-// Route::get('/list', function () {
-//     return view('list');
-// });
 
+//產品列表
 Route::get('/list', [ProductsList::class, 'index'])->name('list');
 
+//訂單
 Route::get('/order',[OrderList::class, 'index'])->name('order');
 
-
+//購物車
 Route::get('/cart',[CartList::class, 'index'])->name('cart');
-Route::get('/cartdel',[CartList::class, 'del'])->name('CartDel');
 
-Route::get('/test', function () {
-    return view('test');
+//購物車刪除
+Route::get('/cartdel',[CartList::class, 'del'])->name('cartdel');
+
+//登入
+Route::get('/login', function () {
+    return view('layouts.login');
+})->name('login');
+
+//註冊
+Route::get('/signup', function () {
+    return view('layouts.signup');
+})->name('signup');
+
+Route::post('/signup', [UsersController::class, 'register'])->name('SignUp');
+Route::get('/signout', [UsersController::class, 'singout'])->name('signout');
+
+
+Route::post('/sigin', [UsersController::class, 'singin'])->name('sigin');
+
+
+Route::fallback(function () {
+    //不能用route name
+    // return redirect('list');
+    //可以用name
+    return redirect()->route('list');
+   
 });
 
- 
 
+
+
+//暫時測試用
+Route::get('/test', function () {
+    return view('layouts.login');
+});
+
+//session 測試
 Route::get('/all', function (Request $request) {
     return response()->json($request->session()->all());
-});
+})->name('1');
+Route::get('/set', [Test::class, 'setSession']);
+Route::get('/del', [Test::class, 'delSession']);
+Route::get('/get-session', [Test::class, 'getSession']);
 
 
-Route::get('/set', [Test::class, 'setSession']) -> name('1');
-
-Route::get('/del', [Test::class, 'delSession']) -> name('1');
-
-Route::get('/get-session', [Test::class, 'getSession']) -> name('2');
-
-
-
+//塞假資料用
 Route::get('/testdata', function () {
     try {
-        // $name = $request->input('name');
-        // $phone = $request->input('phone');
-        
-
-
         $name = '經典巧克力蛋糕';
         $description = '這款經典巧克力蛋糕以高品質可可粉製作，濃郁香滑，搭配細膩的奶油霜，口感豐富，適合任何慶祝場合。';
         // $category_id ; 
@@ -103,7 +124,6 @@ Route::get('/testdata', function () {
           
         ];
         
-    
         foreach( $data as $d){
             $results = Products:: create([
                 'name' => $d['name'],
@@ -121,13 +141,3 @@ Route::get('/testdata', function () {
     }
 });
 
-
-Route::get('/time', function () {
-    return response()->json([
-        'timeWithoutFormat' => Carbon::now(),
-        'current_time' => Carbon::now()->format('Y-m-d H:i:s'),
-        'now' => date('Y-m-d H:i:s'),
-        'timestamp' => strtotime('now'),
-        'timestampToFormat' => date('Y-m-d H:i:s',strtotime('now'))
-    ]);
-});

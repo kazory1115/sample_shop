@@ -17,17 +17,43 @@
         @livewireStyles
     </head>
     <body class="d-flex flex-column h-100">
+        {{-- 彈窗 --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show overlay"   role="alert" >
+                <div style="display: grid; grid-template-columns:1fr 1fr;">
+                    <div style="text-align: center; height: 50px;">
+                    <span  style="font-size:clamp(12px, 2vw, 20px);"> 註冊成功，歡迎使用！</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div>
+        @endif
+        
+        
+
         @livewireScripts
         <main class="flex-shrink-0">
-              <!-- Navigation-->
+            <!-- Navigation-->
             <!-- 選單 -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 20px;">
                 <div class="container">
                     <a class="navbar-brand" href="{{ route('list') }}">SAMPLE 餐館</a>
 
+                    <div  style="display: grid; grid-template-columns: 1fr  1fr; grid-gap: 15px;">
+                        <button class="navbar-toggler" aria-expanded="false" >
+                            <a class="nav-link" href="{{ route('cart') }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <livewire:cart-count />
+                            </a>
+                        </button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        
+                    </div>
                     
                     
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <!-- 正常標題 -->
@@ -38,11 +64,40 @@
                                     <livewire:cart-count />
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('order') }}"> 
-                                    <i class="fa-solid fa-receipt"></i>  訂單
-                                </a>
-                            </li>
+                            {{-- 是否登入 --}}
+                            @if (auth()->check())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('order') }}"> 
+                                        <i class="fa-solid fa-receipt"></i>  訂單
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href=""> 
+                                        <i class="fa fa-user"></i> {{ auth()->user()->name }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('signout') }}"> 
+                                        <i class="fa fa-sign-out "></i> 登出
+                                    </a>
+                                </li>
+
+                            {{-- {{auth()->logout()}} --}}
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}"> 
+                                        <i class="fa fa-user"></i> 登入
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('signup') }}"> 
+                                        <i class="fa fa-user-plus"></i> 註冊
+                                    </a>
+                                </li>
+                            @endif
+
+                            
+
                             <!-- 下拉 -->
                             {{--
                             <li class="nav-item dropdown">
@@ -57,6 +112,7 @@
                     </div>
                 </div>
             </nav>
+            
             <!-- Header-->
             <div class="header">
                 @yield('header')
