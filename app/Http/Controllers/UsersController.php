@@ -58,13 +58,13 @@ class UsersController extends Controller
         auth()->login($user);
 
         // 導向至首頁或其他頁面
-        return redirect()->route('list')->with('success', '註冊成功，歡迎使用！');
+        return redirect()->route('list')->with('success', '註冊成功，歡迎選購！');
     }
 
     public function singin(Request $request)
     {
         //登入 
-         // 驗證請求數據
+        // 驗證請求數據
         //  dd($request->email);
 
         $validatedData = $request->validate([          
@@ -75,8 +75,7 @@ class UsersController extends Controller
             'email.email' => '電子郵件格式不正確。',
             'email.max' => '電子郵件不能超過 255 個字元。',            
             'password.required' => '密碼為必填項目，請輸入您的密碼。',
-            'password.min' => '密碼長度必須至少為 4 個字元。',
-          
+            'password.min' => '密碼長度必須至少為 4 個字元。',          
         ]);
 
 

@@ -52,14 +52,22 @@
                         
                         <div style="display: grid; grid-template-rows:1fr  1fr;">
                             
-                            <div style="font-size:clamp(16px, 2vw, 32px); display: flex; justify-content: flex-end;">
-                                <a class="nav-link" href="{{ route('cartdel', ['product' => $product->id]) }}">
+                            <div style=" display: flex; justify-content: flex-end;">
+                                {{-- <a class="nav-link" href="{{ route('cartdel', ['product' => $product->id]) }}">
                                 <i class="fa-solid fa-trash-can"></i>
-                                </a>
+                                </a> --}}
                                 
+                                <form action="{{ route('cartdel', ['product' => $product->id]) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-link p-0 b" style="color: gray;font-size:clamp(16px, 2vw, 32px);">
+                                        <i class="fa-solid fa-trash-can "></i>
+                                    </button>
+                                </form>
+
                             </div>
                             <div style="display: flex; justify-content: flex-end;align-items: flex-end;">
-                                <span style="font-size:clamp(16px, 2vw, 32px);""> ${{$product['price']}} </span>    
+                                <span style="font-size:clamp(16px, 2vw, 32px);"> ${{$product['price']}} </span>    
                             </div>            
                         </div>
                     </div>
@@ -78,8 +86,20 @@
                     
                 </div>
                 <div style="display: flex;align-content: flex-end;justify-content: flex-end;align-items: flex-end;">
-                   
-                    <button type="button" class="btn btn-outline-success" style="margin-top: 24px ;">確定結帳</button>
+                    @if (auth()->check())
+                        <form action="{{ route('createorder',['total' => $total]) }}" method="POST" style="display: inline;">
+                            @csrf
+                            {{-- @method('DELETE') --}}
+
+                            <button type="submit" class="btn btn-outline-success" style="margin-top: 30px ;">確定結帳</button>
+                        </form>
+                    @else                  
+                        <button type="submit" class="btn btn-outline-success" style="margin-top: 24px ;">前往登入</button>                        
+                    @endif
+
+
+                 
+                    
                 </div>
 
             @else

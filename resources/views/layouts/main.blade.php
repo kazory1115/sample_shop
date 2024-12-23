@@ -20,9 +20,10 @@
         {{-- 彈窗 --}}
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show overlay"   role="alert" >
-                <div style="display: grid; grid-template-columns:1fr 1fr;">
+                <div style="display: grid; grid-template-columns:4fr 1fr;">
                     <div style="text-align: center; height: 50px;">
-                    <span  style="font-size:clamp(12px, 2vw, 20px);"> 註冊成功，歡迎使用！</span>
+                    <span  style="font-size:clamp(12px, 2vw, 20px);"> {{ session('success') }}
+                    </span>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

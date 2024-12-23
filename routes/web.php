@@ -31,18 +31,21 @@ Route::get('/', function () {
     return redirect()->route('list');
 });
 
-
 //產品列表
 Route::get('/list', [ProductsList::class, 'index'])->name('list');
 
 //訂單
 Route::get('/order',[OrderList::class, 'index'])->name('order');
 
+Route::post('/order',[OrderList::class, 'create'])->name('createorder');
+
+
+
 //購物車
 Route::get('/cart',[CartList::class, 'index'])->name('cart');
 
 //購物車刪除
-Route::get('/cartdel',[CartList::class, 'del'])->name('cartdel');
+Route::delete('/cartdel',[CartList::class, 'del'])->name('cartdel');
 
 //登入
 Route::get('/login', function () {

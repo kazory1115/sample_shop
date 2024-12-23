@@ -30,23 +30,53 @@
 
 @section('content')
 <section class="py-2">
-    <div class="container px-3 my-5 " style="background: yellow">
-        <div class="row gx-5 justify-content-center" style="background: yellow">
-            <div class="col-lg-8 col-xl-6">
-                <div class="text-center">
-                    <h2 class="fw-bolder">產品列表</h2>
-                    <p class="lead fw-normal text-muted mb-5">我們精選的美味餐點。</p>
+    <div class="container px-3 my-5 "    style=" border: 1px solid; border-radius: 15px;">
+        
+        <div class="col-lg-8 col-xl-6" style="width: 100%">
+            <div style="background: yellow; padding-top:10px">
+                訂單編號:
+                {{-- 大表 --}}
+                <div>
+                {{-- 小表 --}}
+                  
+                    <div style="display: grid; grid-template-columns:1fr 3fr ; margin: 20px  0px  20px 0px;padding-top: 10px;padding-bottom: 10px;">         
+                        <div  style="width:90%;" >
+                            <img style="width: 90%;border: 1px solid #ccc; border-radius: 10px;" src="https://images.deliveryhero.io/image/fd-tw/Products/66210642.jpg"  />  
+                        </div>  
+                                        
+
+                        <div  style="width: 90%;">
+                            <div style="font-size:clamp(16px, 2vw, 32px); margin-bottom: 10px;">
+                                {{-- {{$product['name']}} --}}
+                                名稱
+                            </div>
+                            <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
+                                {{-- {{$product['description']}} --}}
+                                數量
+                            </div>
+                            
+                            <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
+                                {{-- {{$product['description']}} --}}
+                                小計
+                            </div>
+                            {{-- style="font-size:clamp(15px, 2vw, 20px); " --}}
+                        </div>
+                        
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row gx-5"  style="background: rgb(23, 141, 111)">
-            <div class="col-lg-4 mb-5">
-                <div class="card h-100 shadow border-0">
-                    {{-- <img style="" class="card-img-top" src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}" /> --}}
-                </div>
+             
+
             </div>
 
+            <div style="font-size:clamp(9px, 1.5vw, 22px); ">
+                {{-- {{$product['description']}} --}}
+               總計
+            </div>
+
+
         </div>
+       
+      
     </div>
 </section>
 @endsection
