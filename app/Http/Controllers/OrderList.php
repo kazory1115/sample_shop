@@ -17,40 +17,41 @@ class OrderList extends Controller
      */
     public function index()
     {
-        try {
-            // $products = Products::all();
+        try {           
             $Orders = Orders:: where( 'user_id' , auth()->user()->id ) -> get();
 
-            $a = array();
-            $b = array(); 
-            // $a[] = $Orders;
-            // $a[]=$Order_Items;
-           
-            foreach($Orders as $a){
-                $Order_Items = Order_Items::  where( 'order_id' , $a['id']) -> get();
-                $b[$a['id']] = array( $Orders,);
-                
+            $detail = array(); 
+            $OrderTotal = 0;
+            foreach($Orders as $o){
+                $Order_Items = Order_Items::  where( 'order_id' , $o['id']) -> get();
+                $OrderTotal += $o['total_price'];
+                // 獲取所有需要的 product_id
+                $productIds = $Order_Items->pluck('product_id');
 
+                // 一次性查詢所有相關的 Products
+                $products = Products::whereIn('id', $productIds)->pluck('image_url', 'id');
+                $productsName = Products::whereIn('id', $productIds)->pluck('name', 'id');
+
+                // 為每個 Order_Item 添加 url
+                foreach ($Order_Items as $key => $item) {
+                    $Order_Items[$key]['image_url'] = $products[$item['product_id']] ?? null;
+                    $Order_Items[$key]['name'] = $productsName[$item['product_id']] ?? null;
+                }
+
+              
+
+                $detail[$o['id']] = [
+                    'order' => $o,
+                    'items' => $Order_Items,
+                    
+                ];
             }
             
-            return response()->json(
-                array(
-                    'dd' => $b
-                ));
-
-
-           
-
-            return response()->json(
-                array(
-                    // 'Orders' => $Orders,
-                    
-                    // 'Order_Items' => $Order_Items ,
-                    'dd' => $b
-                ));
+            // return response()->json($detail);
             
             return view('layouts.order', [               
-                'products' => $results,
+                'Order' => $detail,
+                'OrderTotal' => $OrderTotal,
             ]);
         
         } catch (\Exception $e) {

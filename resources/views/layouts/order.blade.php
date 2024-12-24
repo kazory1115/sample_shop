@@ -31,51 +31,54 @@
 @section('content')
 <section class="py-2">
     <div class="container px-3 my-5 "    style=" border: 1px solid; border-radius: 15px;">
-        
-        <div class="col-lg-8 col-xl-6" style="width: 100%">
-            <div style="background: yellow; padding-top:10px">
-                訂單編號:
-                {{-- 大表 --}}
-                <div>
-                {{-- 小表 --}}
-                  
-                    <div style="display: grid; grid-template-columns:1fr 3fr ; margin: 20px  0px  20px 0px;padding-top: 10px;padding-bottom: 10px;">         
-                        <div  style="width:90%;" >
-                            <img style="width: 90%;border: 1px solid #ccc; border-radius: 10px;" src="https://images.deliveryhero.io/image/fd-tw/Products/66210642.jpg"  />  
-                        </div>  
-                                        
+    
+        <div class="col-lg-8 col-xl-6" style="width: 100%"> 
+            @foreach($Order as $OrderData)
+                <div style=" padding-top:20px">
+                   <span style="font-size:clamp(16px, 2vw, 32px);"> 訂單編號: {{$OrderData['order']['id']}}</span>
+                    {{-- 大表 --}}
+                    <div>
+                    {{-- 小表 --}}
+                    @foreach($OrderData['items'] as $OrderItems)
+                        <div style="display: grid; grid-template-columns:1fr 3fr ; margin: 20px  0px  20px 0px;padding-top: 10px;padding-bottom: 10px;">         
+                            <div  style="width:90%;" >
+                                <img style="width: 90%;border: 1px solid #ccc; border-radius: 10px;"  src="{{ $OrderItems['image_url'] }}"  />  
 
-                        <div  style="width: 90%;">
-                            <div style="font-size:clamp(16px, 2vw, 32px); margin-bottom: 10px;">
-                                {{-- {{$product['name']}} --}}
-                                名稱
-                            </div>
-                            <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
-                                {{-- {{$product['description']}} --}}
-                                數量
+                                
+                            </div>  
+                    
+
+                            <div  style="width: 90%;">
+                                <div style="font-size:clamp(16px, 2vw, 32px); margin-bottom: 10px;">
+                                    {{-- {{}} --}}
+                                    {{$OrderItems['name']}}
+                                </div>
+                                <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
+                                    {{-- {{$product['description']}} --}}
+                                    數量 : {{$OrderItems['quantity']}}
+                                </div>
+                                
+                                <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
+                                    小計 : {{$OrderItems['total']}}
+                                    
+                                </div>
+                                {{-- style="font-size:clamp(15px, 2vw, 20px); " --}}
                             </div>
                             
-                            <div style="font-size:clamp(9px, 1.5vw, 22px); margin-bottom: 10px;">
-                                {{-- {{$product['description']}} --}}
-                                小計
-                            </div>
-                            {{-- style="font-size:clamp(15px, 2vw, 20px); " --}}
                         </div>
-                        
+                    @endforeach
+                       
                     </div>
+                
+
                 </div>
-             
-
-            </div>
-
-            <div style="font-size:clamp(9px, 1.5vw, 22px); ">
-                {{-- {{$product['description']}} --}}
-               總計
-            </div>
-
-
+            @endforeach
+            <div style="display: flex; justify-content: flex-end;align-items: flex-end;">
+                <span style="font-size:clamp(16px, 2vw, 32px);">  總計 : ${{$OrderTotal}} </span>    
+            </div>            
+          
         </div>
-       
+
       
     </div>
 </section>
