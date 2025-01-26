@@ -49,7 +49,7 @@ class OrderList extends Controller
             
             // return response()->json($detail);
             
-            return view('layouts.order', [               
+            return view('layouts.order', [
                 'Order' => $detail,
                 'OrderTotal' => $OrderTotal,
             ]);
