@@ -10,7 +10,7 @@ class Products extends Model
     use HasFactory;
     
     // 允許批量賦值的欄位
-    protected $fillable = [        
+    protected $fillable = [
         'name',
         'description',
         'category_id',
