@@ -38,8 +38,6 @@ class OrderList extends Controller
                     $Order_Items[$key]['name'] = $productsName[$item['product_id']] ?? null;
                 }
 
-              
-
                 $detail[$o['id']] = [
                     'order' => $o,
                     'items' => $Order_Items,

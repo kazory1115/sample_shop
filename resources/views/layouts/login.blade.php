@@ -34,13 +34,14 @@
      
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 5%">
             <div class="" style="width: 100%; max-width: 600px;">
-                <form action="{{ route('sigin') }}" method="POST">
+
+                <form id="loginForm">
                     @csrf
                     <div class="mb-3">
                         <label for="email" class="form-label fw-bold">帳號</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
-                            <input type="text" id="email" name="email"  class="form-control" placeholder="請輸入電子郵件" required>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="請輸入電子郵件" required>
                         </div>
                         @error('email')
                         <div class="text-danger">{{ $message }}</div>
@@ -59,13 +60,49 @@
                     </div>
             
                     <div class="d-grid">
-                        <button class="btn btn-success btn-block">登入</button>
+                        <button type="submit" class="btn btn-success btn-block">登入</button>
                     </div>
                 </form>
             </div>
         </div>
         
-      
+
     </div>
 </section>
 @endsection
+
+<script>
+$(document).ready(function() {
+    $('#loginForm').on('submit', function() {
+        
+        $.ajax({
+            url: "{{ route('login') }}", 
+            type: "POST",
+            data: {
+                _token: $('input[name="_token"]').val(),
+                email: $('#email').val(),
+                password: $('#password').val()
+            },
+            success: function(response) {
+                if(response.success) {
+                    window.location.href = "{{ route('home') }}"; // 登入成功後重定向
+                } else {
+                    alert('登入失敗：' + response.message);
+                }
+            },
+            error: function(xhr) {
+                if(xhr.status === 422) { // 驗證錯誤
+                    var errors = xhr.responseJSON.errors;
+                    var errorMessage = '';
+                    $.each(errors, function(key, value) {
+                        errorMessage += value[0] + '\n';
+                    });
+                    alert(errorMessage);
+                } else {
+                    alert('發生錯誤，請稍後再試');
+                }
+            }
+        });
+    });
+});
+</script>

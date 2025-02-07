@@ -20,7 +20,6 @@
                 </div>
                 <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
                    
-                
                 </div>
             </div>
         </div>
@@ -41,7 +40,9 @@
             </div>
         </div>
         <div class="row gx-5">
-         
+            <script>
+                // Swal.fire('系統訊息!', '商品已加入購物車！', 'success');
+            </script>
 
             @foreach($products as $product)
                 <div class="col-lg-4 mb-5">
@@ -57,16 +58,16 @@
                                 </div>
                                 <!-- 右側區塊 -->
                                 <div style="">
-                                    {{-- <div >
-                                        <a href="{{ route('2') }}"><i class="fa-solid fa-cart-shopping"></i></a>
-                                    </div> --}}
-
-                                    {{-- 傳遞product參數給livewire:counter  --}}
-                                    <livewire:addcart :product="$product" />
-                                  
-
-                                 
-                                    <div id="cart-message" style="display: none; color: green; margin-top: 10px;">商品已加入購物車！</div>
+                                    <div>
+                                        <h5>已加入: </h5>
+                                        <button wire:click="add" class="btn btn-primary">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </button>
+                                        <button wire:click="reduce" class="btn btn-danger">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                    
                                 </div>
                             </div>
                                                      

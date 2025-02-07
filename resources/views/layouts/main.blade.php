@@ -8,32 +8,18 @@
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        {{-- Font Awesome  --}}
+        <!-- Bootstrap core JS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!-- Font Awesome  -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+          
         <!-- 引入 Vite -->
         @vite('resources/css/list.css')
-        <!-- 引入 livewire -->
-        @livewireStyles
+
+
     </head>
     <body class="d-flex flex-column h-100">
-        {{-- 彈窗 --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show overlay"   role="alert" >
-                <div style="display: grid; grid-template-columns:4fr 1fr;">
-                    <div style="text-align: center; height: 50px;">
-                    <span  style="font-size:clamp(12px, 2vw, 20px);"> {{ session('success') }}
-                    </span>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-
-            </div>
-        @endif
-        
-        
-
-        @livewireScripts
         <main class="flex-shrink-0">
             <!-- Navigation-->
             <!-- 選單 -->
@@ -45,7 +31,7 @@
                         <button class="navbar-toggler" aria-expanded="false" >
                             <a class="nav-link" href="{{ route('cart') }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <livewire:cart-count />
+                                <!--  補別的顯現數量  -->
                             </a>
                         </button>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +48,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('cart') }}">
                                     <i class="fa-solid fa-cart-shopping"></i> 購物車
-                                    <livewire:cart-count />
+                                    <!--  補別的顯現數量  -->
                                 </a>
                             </li>
                             {{-- 是否登入 --}}
@@ -162,7 +148,5 @@
             </div>
         </footer>
 
-        <!-- Bootstrap core JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

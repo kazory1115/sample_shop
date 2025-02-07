@@ -20,8 +20,6 @@ class UsersController extends Controller
             'password' => 'required|string|min:8|confirmed',       
         ]);
 
-
-
     }
     
     public function register(Request $request)
@@ -63,7 +61,7 @@ class UsersController extends Controller
 
     public function singin(Request $request)
     {
-        //登入 
+        // 登入 
         // 驗證請求數據
         //  dd($request->email);
 

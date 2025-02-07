@@ -36,10 +36,7 @@ Route::get('/list', [ProductsList::class, 'index'])->name('list');
 
 //訂單
 Route::get('/order',[OrderList::class, 'index'])->name('order');
-
 Route::post('/order',[OrderList::class, 'create'])->name('createorder');
-
-
 
 //購物車
 Route::get('/cart',[CartList::class, 'index'])->name('cart');
@@ -47,7 +44,7 @@ Route::get('/cart',[CartList::class, 'index'])->name('cart');
 //購物車刪除
 Route::delete('/cartdel',[CartList::class, 'del'])->name('cartdel');
 
-//登入
+//登入(畫面) 
 Route::get('/login', function () {
     return view('layouts.login');
 })->name('login');
@@ -59,21 +56,7 @@ Route::get('/signup', function () {
 
 Route::post('/signup', [UsersController::class, 'register'])->name('SignUp');
 Route::get('/signout', [UsersController::class, 'singout'])->name('signout');
-
-
 Route::post('/sigin', [UsersController::class, 'singin'])->name('sigin');
-
-
-Route::fallback(function () {
-    //不能用route name
-    // return redirect('list');
-    //可以用name
-    return redirect()->route('list');
-   
-});
-
-
-
 
 //暫時測試用
 Route::get('/test', function () {
@@ -144,3 +127,23 @@ Route::get('/testdata', function () {
     }
 });
 
+
+/**
+ * 後台程式用
+ * 1、新增產品
+ * 2、管理產品(編輯)
+ * 3、原物料管理
+ *
+ */
+
+
+
+
+/* 無效路由自動導向 */
+Route::fallback(function () {
+    //不能用route name
+    // return redirect('list');
+    //可以用name
+    return redirect()->route('list');
+   
+});
