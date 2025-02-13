@@ -15,7 +15,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
           
         <!-- 引入 Vite -->
-        @vite('resources/css/list.css')
+        {{-- @vite('resources/css/list.css') --}}
+
 
 
     </head>

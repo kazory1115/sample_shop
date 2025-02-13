@@ -17,13 +17,13 @@ class OrderList extends Controller
      */
     public function index()
     {
-        try {           
-            $Orders = Orders:: where( 'user_id' , auth()->user()->id ) -> get();
+        try {
+            $Orders = Orders::where('user_id', auth()->user()->id)->get();
 
-            $detail = array(); 
+            $detail = array();
             $OrderTotal = 0;
-            foreach($Orders as $o){
-                $Order_Items = Order_Items::  where( 'order_id' , $o['id']) -> get();
+            foreach ($Orders as $o) {
+                $Order_Items = Order_Items::where('order_id', $o['id'])->get();
                 $OrderTotal += $o['total_price'];
                 // 獲取所有需要的 product_id
                 $productIds = $Order_Items->pluck('product_id');
@@ -41,17 +41,16 @@ class OrderList extends Controller
                 $detail[$o['id']] = [
                     'order' => $o,
                     'items' => $Order_Items,
-                    
+
                 ];
             }
-            
+
             // return response()->json($detail);
-            
+
             return view('layouts.order', [
                 'Order' => $detail,
                 'OrderTotal' => $OrderTotal,
             ]);
-        
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -60,73 +59,72 @@ class OrderList extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create( Request $request)
+    public function create(Request $request)
     {
         //
         try {
             $cartArray = Session::get('cart_count', []);
             $resultsarray = [];
-            $request->input('total'); 
+            $request->input('total');
 
-            $orderListDate = [         
+            $orderListDate = [
                 'order_id' => '',
                 'product_id',
-                'quantity' ,
-                'price' ,
-                'total' ,   
+                'quantity',
+                'price',
+                'total',
             ];
-          
+
             $orderData = [
-                'user_id'=> auth()->user()->id,
-                'total_price'=>$request->input('total'),
-                'status'=>'1',
+                'user_id' => auth()->user()->id,
+                'total_price' => $request->input('total'),
+                'status' => '1',
             ];
 
 
-                  
-           
-            
-            $OrdersStatus = Orders:: create($orderData);
-           
 
 
-            foreach($cartArray as $key => $v){
-                if($v > 0){
-                    $results = Products::where('id', $key)->select('name', 'price','id')->first();
-                   
-                    $orderListData = [         
+
+            $OrdersStatus = Orders::create($orderData);
+
+
+
+            foreach ($cartArray as $key => $v) {
+                if ($v > 0) {
+                    $results = Products::where('id', $key)->select('name', 'price', 'id')->first();
+
+                    $orderListData = [
                         'order_id' => $OrdersStatus['id'],
-                        'product_id' =>$key ,
+                        'product_id' => $key,
                         'quantity' => $v,
                         'price' => $results['price'],
-                        'total' => $results['price'] * $v ,   
+                        'total' => $results['price'] * $v,
                     ];
-                    $orderListStatus = Order_Items:: create($orderListData);
-
-                   
+                    $orderListStatus = Order_Items::create($orderListData);
                 }
 
-                Session::forget(['cart_count', 'cartArray']);//清除Session
+                Session::forget(['cart_count', 'cartArray']); //清除Session
 
-                
+
             }
 
 
             return redirect()->route('list')->with('success', '訂單建立成功，購物車已清空！');
 
-           
-            return response()->json(
-                $OrdersStatus);
-            
-        
 
             return response()->json(
-                $resultsarray);
-            
-            return view('layouts.order', [               
+                $OrdersStatus
+            );
+
+
+
+            return response()->json(
+                $resultsarray
+            );
+
+            return view('layouts.order', [
                 'products' => '',
             ]);
-        
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

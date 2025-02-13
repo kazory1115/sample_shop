@@ -15,10 +15,9 @@ class ProductsList extends Controller
     {
         try {
             $products = Products::all();
-            return view('layouts.list', [               
+            return view('layouts.list', [
                 'products' => $products,
             ]);
-        
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

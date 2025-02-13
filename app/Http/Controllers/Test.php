@@ -16,10 +16,9 @@ class Test extends Controller
             $products = Products::all();
 
 
-            return view('list', [               
+            return view('list', [
                 'products' => $products
             ]);
-
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -44,10 +43,7 @@ class Test extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-       
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -78,7 +74,7 @@ class Test extends Controller
     {
         // 將用戶名稱存儲到 Session
         // $request->session()->put('user_name', 'eeee Doe');
-        $request->session()->put('user_name', ['a'=>array(),'b']);
+        $request->session()->put('user_name', ['a' => array(), 'b']);
         return "Session 已設定！";
     }
 
@@ -103,7 +99,4 @@ class Test extends Controller
         // 重定向到名為 'home' 的路由（需要在 routes/web.php 定義）
         return redirect()->route('list')->with('user_name', $userName);
     }
-
-
-
 }
