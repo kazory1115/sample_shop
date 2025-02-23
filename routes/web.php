@@ -35,14 +35,14 @@ Route::get('/', function () {
 Route::get('/list', [ProductsList::class, 'index'])->name('list');
 
 //訂單
-Route::get('/order',[OrderList::class, 'index'])->name('order');
-Route::post('/order',[OrderList::class, 'create'])->name('createorder');
+Route::get('/order', [OrderList::class, 'index'])->name('order');
+Route::post('/order', [OrderList::class, 'create'])->name('createorder');
 
 //購物車
-Route::get('/cart',[CartList::class, 'index'])->name('cart');
+Route::get('/cart', [CartList::class, 'index'])->name('cart');
 
 //購物車刪除
-Route::delete('/cartdel',[CartList::class, 'del'])->name('cartdel');
+Route::delete('/cartdel', [CartList::class, 'del'])->name('cartdel');
 
 //登入(畫面) 
 Route::get('/login', function () {
@@ -72,6 +72,17 @@ Route::get('/del', [Test::class, 'delSession']);
 Route::get('/get-session', [Test::class, 'getSession']);
 
 
+Route::get('/api/stock', [Test::class, 'stock'])->name('apistock');
+
+Route::get('/stock', function () {
+    return view('test1');
+})->name('stock');
+
+Route::get('/stockold', function () {
+    return view('layouts.stockold');
+});
+
+
 //塞假資料用
 Route::get('/testdata', function () {
     try {
@@ -82,7 +93,7 @@ Route::get('/testdata', function () {
         $price = 100;
 
         $data = [
-           
+
             [
                 'name' => '椰香綠咖哩海鮮總匯',
                 'description' => '小辣 | 含蝦子，淡菜，魷魚及蛤蜊主食擇一  | 小辣 | 含蝦子，淡菜，魷魚及蛤蜊',
@@ -107,21 +118,21 @@ Route::get('/testdata', function () {
                 'image_url' => 'https://images.deliveryhero.io/image/fd-tw/Products/66210652.jpg',
                 'price' => 190,
             ],
-          
+
         ];
-        
-        foreach( $data as $d){
-            $results = Products:: create([
+
+        foreach ($data as $d) {
+            $results = Products::create([
                 'name' => $d['name'],
-                'description' =>$d['description'] ,
+                'description' => $d['description'],
                 // 'category_id' => $d['category_id'],
-                'image_url' => $d['image_url'] , 
-                'price' => $d['price'] ,           
+                'image_url' => $d['image_url'],
+                'price' => $d['price'],
             ]);
         }
         return response()->json(
-            ['results' => $results]);
-    
+            ['results' => $results]
+        );
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()]);
     }
@@ -140,10 +151,9 @@ Route::get('/testdata', function () {
 
 
 /* 無效路由自動導向 */
-Route::fallback(function () {
-    //不能用route name
-    // return redirect('list');
-    //可以用name
-    return redirect()->route('list');
-   
-});
+// Route::fallback(function () {
+//     //不能用route name
+//     // return redirect('list');
+//     //可以用name
+//     return redirect()->route('list');
+// });
