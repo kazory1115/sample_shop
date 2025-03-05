@@ -72,15 +72,10 @@ Route::get('/del', [Test::class, 'delSession']);
 Route::get('/get-session', [Test::class, 'getSession']);
 
 
-Route::get('/api/stock', [Test::class, 'stock'])->name('apistock');
-
+//股票小程式
 Route::get('/stock', function () {
-    return view('test1');
+    return view('stock.stock');
 })->name('stock');
-
-Route::get('/stockold', function () {
-    return view('layouts.stockold');
-});
 
 
 //塞假資料用
